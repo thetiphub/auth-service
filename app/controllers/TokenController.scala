@@ -17,14 +17,6 @@ class TokenController @Inject() extends Controller {
         )(LoginData.apply)(LoginData.unapply)
     )
 
-    case class BearerTokenData(token: String)
-
-    def bearerTokenForm = Form(
-        mapping(
-            "token" -> text
-        )(BearerTokenData.apply)(BearerTokenData.unapply)
-    )
-
     def login = Action { implicit request =>
         loginForm.bindFromRequest.fold(
             formWithErrors => BadRequest("Unable to login"),
