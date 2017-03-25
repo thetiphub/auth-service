@@ -3,6 +3,15 @@
 # https://www.playframework.com/documentation/latest/ScalaRouting
 # ~~~~
 
+# Create a new authentication user
+POST    /user                       controllers.UserController.create
+PUT     /user                       controllers.UserController.updatePassword
+
+# Bearer token endpoints
+GET     /token/:token               controllers.TokenController.verify(token)
+POST    /token                      controllers.TokenController.login
+DELETE  /token/:token               controllers.TokenController.logout(token)
+
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
 
