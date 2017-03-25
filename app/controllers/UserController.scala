@@ -28,7 +28,5 @@ class UserController @Inject() extends Controller {
         )
     }
 
-    def updatePassword = Action { implicit request =>
-        ???
-    }
+    def updatePassword = TODO
 }
