@@ -8,14 +8,14 @@ import play.api.mvc._
 
 @Singleton
 class UserController @Inject() extends Controller {
-    case class userData(email: String, username: String, password: String)
+    case class UserData(email: String, username: String, password: String)
 
     val userForm = Form(
         mapping(
             "email" -> text,
             "username" -> text,
             "password" -> text
-        )(userData.apply)(userData.unapply)
+        )(UserData.apply)(UserData.unapply)
     )
 
     def create = Action { implicit request =>
