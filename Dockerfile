@@ -4,15 +4,13 @@ FROM hseeberger/scala-sbt:latest
 COPY ["build.sbt", "/tmp/build/"]
 COPY ["project/plugins.sbt", "project/build.properties", "/tmp/build/project/"]
 RUN cd /tmp/build && \
- sbt update && \
- sbt compile && \
+ sbt clean update compile && \
  rm -rf /tmp/build
 
 # copy and build application
-COPY . /app
-WORKDIR /app
+COPY . /
 RUN sbt compile
 
-EXPOSE 9000 9000
+EXPOSE 9000
 
 CMD ["sbt", "run"]
