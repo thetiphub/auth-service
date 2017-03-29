@@ -2,6 +2,7 @@ version: "3.0"
 services:
     api:
         build: .
+        tty: true
         ports:
             - "9000:9000"
         depends_on: 
