@@ -1,5 +1,8 @@
 package controllers
 
+import com.mongodb.casbah.Imports._
+import com.mongodb.DBObject
+
 import javax.inject._
 import play.api._
 import play.api.data._
@@ -34,13 +37,17 @@ class TokenController @Inject() extends Controller {
 
     def verify(token: String) = Action { implicit request =>
         
-        println(s"\n\n\n\n${token}\n\n\n\n")
+        val client = MongoClient("localhost", 27017)
+        val db = client("auth-service")
+        val coll = db("tokens")
 
-        if(token == "validtoken") {
-            Ok("User verified")
-        }
-        else {
-            NotFound("User failed verification")
+        val bearerToken = MongoDBObject("bearerToken" -> token) 
+        
+        val bt = coll.findOne(bearerToken)
+
+        bt match {
+           case Some(bt) => Ok("User verified")
+           case None => NotFound("User failed verification")
         }
     }
 }
