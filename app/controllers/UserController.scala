@@ -21,19 +21,18 @@ class UserController @Inject() extends Controller {
 
     def create = Action { implicit request =>
 
-        val mongoClient = MongoClient("localhost", 27017)
-        val db = mongoClient("auth-service")
-        val coll = db("auth-service")
+        val client = MongoClient("db", 27017)
+        val db = client("auth-service")
+        val coll = db("users")
 
         userForm.bindFromRequest.fold(
             formWithErrors => BadRequest("has errors"),
             user => {
                 println(s"\n\n\n\n${user.email}\n${user.username}\n${user.password}\n\n\n\n")
 
-                val user1 = MongoDBObject("user"  -> "Rob Darby")
+                val user1 = MongoDBObject("user" -> "Rob Darby")
 
-//                failing here
-//                coll.insert( user1 )
+                coll.insert( user1 )
 
                 Ok("User created")
             }
