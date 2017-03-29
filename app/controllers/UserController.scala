@@ -1,5 +1,7 @@
 package controllers
+
 import com.mongodb.casbah.Imports._
+import org.mindrot.jbcrypt.BCrypt;
 
 import javax.inject._
 import play.api._
@@ -33,7 +35,8 @@ class UserController @Inject() extends Controller {
                 val user1 = MongoDBObject(
                     "email"    -> user.email,
                     "username" -> user.username,
-                    "password" -> user.password)
+                    "password" -> BCrypt.hashpw(user.password, BCrypt.gensalt)
+                )
 
                 coll.insert( user1 )
 

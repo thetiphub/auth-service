@@ -10,6 +10,7 @@ scalaVersion := "2.11.8"
 libraryDependencies += filters
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
 libraryDependencies += "org.mongodb" %% "casbah" % "3.1.1"
+libraryDependencies += "org.mindrot" % "jbcrypt" % "0.3m"
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.thetiphub.controllers._"
