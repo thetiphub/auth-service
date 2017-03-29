@@ -30,7 +30,10 @@ class UserController @Inject() extends Controller {
             user => {
                 println(s"\n\n\n\n${user.email}\n${user.username}\n${user.password}\n\n\n\n")
 
-                val user1 = MongoDBObject("user" -> "Rob Darby")
+                val user1 = MongoDBObject(
+                    "email"    -> user.email,
+                    "username" -> user.username,
+                    "password" -> user.password)
 
                 coll.insert( user1 )
 
