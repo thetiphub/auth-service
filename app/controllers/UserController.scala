@@ -30,7 +30,7 @@ class UserController @Inject() extends Controller {
 
                 val entry = User(
                     email = user.email,
-                    userName = user.username,
+                    username = user.username,
                     password = BCrypt.hashpw(user.password, BCrypt.gensalt)
                 )
 
