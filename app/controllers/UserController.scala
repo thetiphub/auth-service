@@ -1,7 +1,7 @@
 package controllers
 
 import com.mongodb.casbah.Imports._
-import org.mindrot.jbcrypt.BCrypt;
+import org.mindrot.jbcrypt.BCrypt
 import javax.inject._
 import play.api._
 import play.api.data._
@@ -21,23 +21,20 @@ class UserController @Inject() extends Controller {
     )
 
     def create = Action { implicit request =>
-
-        val client = MongoClient("db", 27017)
-        val db = client("auth-service")
-        val coll = db("users")
+        val userDao = new UserDAO
 
         userForm.bindFromRequest.fold(
             formWithErrors => BadRequest("has errors"),
             user => {
                 println(s"\n\n\n\n${user.email}\n${user.username}\n${user.password}\n\n\n\n")
 
-                val user1 = MongoDBObject(
-                    "email"    -> user.email,
-                    "username" -> user.username,
-                    "password" -> BCrypt.hashpw(user.password, BCrypt.gensalt)
+                val entry = User(
+                    email = user.email,
+                    userName = user.username,
+                    password = BCrypt.hashpw(user.password, BCrypt.gensalt)
                 )
 
-                coll.insert( user1 )
+                userDao.insert(entry)
 
                 Ok("User created")
             }
