@@ -22,7 +22,7 @@ class UserController @Inject() extends Controller {
 
     def create = Action { implicit request =>
 
-        val client = MongoClient("db", 27017)
+        val client = MongoClient("localhost", 27017)
         val db = client("auth-service")
         val coll = db("users")
 

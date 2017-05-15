@@ -24,7 +24,7 @@ class TokenController @Inject() extends Controller {
         loginForm.bindFromRequest.fold(
             formWithErrors => BadRequest("Unable to login"),
             login => {
-                val client = MongoClient("db", 27017)
+                val client = MongoClient("localhost", 27017)
                 val db = client("auth-service")
                 val userCollection = db("users")
                 val tokenCollection = db("tokens")
@@ -50,7 +50,7 @@ class TokenController @Inject() extends Controller {
 
     def logout(token: String) = Action { implicit request =>
 
-        val client = MongoClient("db", 27017)
+        val client = MongoClient("localhost", 27017)
         val db = client("auth-service")
         val coll = db("tokens")
         val bearerToken = MongoDBObject("bearerToken" -> token)
@@ -61,7 +61,7 @@ class TokenController @Inject() extends Controller {
 
     def verify(token: String) = Action { implicit request =>
         
-        val client = MongoClient("db", 27017)
+        val client = MongoClient("localhost", 27017)
         val db = client("auth-service")
         val coll = db("tokens")
 
