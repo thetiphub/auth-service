@@ -71,7 +71,7 @@ class TokenController @Inject() extends Controller {
 
         bt match {
            case Some(bt) => Ok("User verified")
-           case None => NotFound("User failed verification")
+           case None => Unauthorized("User failed verification")
         }
     }
 }

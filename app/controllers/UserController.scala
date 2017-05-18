@@ -6,18 +6,22 @@ import javax.inject._
 import play.api._
 import play.api.data._
 import play.api.data.Forms._
+import play.api.libs.json.{Json, Writes}
 import play.api.mvc._
 
 @Singleton
 class UserController @Inject() extends Controller {
-    case class UserData(email: String, username: String, password: String)
+    case class User(email: String, username: String, password: String)
+    implicit object UserWrite extends Writes[User] {
+      def writes(u: User): JsValue =
+    }
 
     val userForm = Form(
         mapping(
             "email" -> text,
             "username" -> text,
             "password" -> text
-        )(UserData.apply)(UserData.unapply)
+        )(User.apply)(User.unapply)
     )
 
     def create = Action { implicit request =>
@@ -39,7 +43,7 @@ class UserController @Inject() extends Controller {
 
                 coll.insert( user1 )
 
-                Ok("User created")
+                Ok(Json.toJson(user))
             }
         )
     }
